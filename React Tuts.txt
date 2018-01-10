@@ -1,0 +1,74 @@
+Component --> function that returns a virtual dom 
+In react we dont use classname to retrive elements from the page
+props contain object of key,value pair of attribute and value
+proptypes defiine what a component can take and of what type
+to pass number in components we have to use it as a expressions EX:attribute={3}
+if , for are statment and not expression and thus cant be used in JSX
+
+
+Stateless Functional Component: A component defined as a function. It takes only props as an argument and returns a virtual DOM.
+Component Class: A component definition that can include things like state, helper methods and other advanced hooks into the page’s DOM
+
+state is just a piece of data(initial value) which changes over time , events happens and state is mutated
+
+//SFC Stateles Functional Component Example
+//Check in src for Class implementations
+function Counter(props) {
+ 	return (
+ 		<div className="counter">
+ 			<button className="counter-action decrement"> - </button>
+ 			<div className="counter-score">{props.score}</div>
+ 			<button className="counter-action increment"> + </button>
+ 		</div>
+ 	);
+ }
+
+Application.propTypes = {
+	title: React.PropTypes.string
+};
+
+Application.defaultProps = {
+	title: "Default Title"
+}
+
+//StateFul Component
+var Counter = React.createClass({
+	propTypes:{
+		initialScore:React.PropTypes.number.isRequired
+	},
+	getInitialState: function(){
+		return {
+			score:this.props.initialScore
+		}
+	},
+	incrementScore:function(e){
+		this.setState({
+			score: (this.state.score + 1)
+		})
+	},
+	decrementScore:function(e){
+		this.setState({
+			score: (this.state.score - 1)
+		})
+	},
+	render: function () {
+		return (
+			<div className="counter">
+				<button className="counter-action decrement" onClick={this.decrementScore}> - </button>
+				<div className="counter-score">{this.state.score}</div>
+				<button className="counter-action increment" onClick={this.incrementScore}> + </button>
+			</div>);
+	}
+})
+
+
+Assigning directly to state object will not re render the component, to re render always use setstate methods
+no need to use bind call for this propert , react does this automatically
+
+Two Main Types of state are there:-
+1. Application State
+2.Component State
+
+Data flows from paretn to child as props(unidriectional flow)
+
+
