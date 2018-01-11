@@ -70,5 +70,8 @@ Two Main Types of state are there:-
 2.Component State
 
 Data flows from paretn to child as props(unidriectional flow)
+input elements in html are StateFuland we have to manage it explicitly in react
+state is our responsibility in react.
+
 
 
