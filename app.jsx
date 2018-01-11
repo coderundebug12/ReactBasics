@@ -8,6 +8,7 @@ var PLAYERS = [
 function Header(props) {
 	return (
 		<div className="header">
+			<Stats players={props.players}/>
 			<h1>{props.title}</h1>
 		</div>
 	);
@@ -45,18 +46,30 @@ Counter.propTypes ={
 	onChanges:React.PropTypes.func.isRequired
 }
 
-// function Application(props) {
-// 	return (
-// 		<div className="scoreboard">
-// 			<Header title={props.title} />
-// 			<div className="players">
-// 				{props.players.map(
-// 					function (player) { return <Player name={player.name} score={player.score} key={player.key} />; }
-// 				)}
-// 			</div>
-// 		</div>
-// 	);
-// }
+function Stats(props){
+	var totalPlayers = props.players.length;
+	var totalPoints = props.players.reduce(function(total,player){
+		return total + player.score;
+	},0) 
+	return(
+		<table className="stats">
+			<tbody>
+				<tr>
+					<td>Players</td>
+					<td>{totalPlayers}</td>
+				</tr>
+				<tr>
+					<td>Total Points</td>
+					<td>{totalPoints}</td>
+				</tr>
+			</tbody>
+		</table>
+	)
+}
+
+Stats.propTypes={
+	players:React.PropTypes.array.isRequired,
+}
 
 var Application = React.createClass({
 	propTypes:{
@@ -78,7 +91,7 @@ var Application = React.createClass({
 	render: function () {
 		return (
 			<div className="scoreboard">
-				<Header title={this.props.title} />
+				<Header title={this.props.title} players={this.state.players}/>
 				<div className="players">
 					{this.state.players.map(
 						function (player,index) { 
