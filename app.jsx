@@ -5,12 +5,13 @@ var PLAYERS = [
 	{ name: "Ravi", score: 3, key: 3 },
 	{ name: "Nikesh", score: 4, key: 4 },
 ]
-var nextId=4;
+var nextId=5;
 function Header(props) {
 	return (
 		<div className="header">
 			<Stats players={props.players}/>
 			<h1>{props.title}</h1>
+			<Stopwatch/>
 		</div>
 	);
 }
@@ -86,7 +87,6 @@ var Application = React.createClass({
 		}
 	},
 	onScoreChange:function(index,delta){
-		console.log(index,delta)
 		this.state.players[index].score += delta;
 		this.setState(this.state)
 	},
@@ -94,11 +94,13 @@ var Application = React.createClass({
 		this.state.players.push({
 			name:data,
 			score:0,
-			id:this.random()
+			key:this.random()
 		})
+		console.log(this.state.players)
 		this.setState(this.state)
 	},
 	random:function(){
+		console.log(nextId)
 		return (nextId++)
 	},
 	onRemovePlayer:function(index){
@@ -148,6 +150,59 @@ var AddPlayerForm = React.createClass({
 					<input type="text" value={this.state.name} onChange={this.onNameChange}/>
 					<input type="submit" value="Add Player"/>
 				</form>
+			</div>
+		)
+	}
+})
+
+var Stopwatch = React.createClass({
+	getInitialState:function(){
+		return {
+			running:false,
+			elapsedTime:0,
+			previousTime:0
+		}
+	},
+	onStart:function(){
+		this.setState({
+			running:true,
+			previousTime:Date.now()
+		})
+	},
+	onStop:function(){
+		this.setState({
+			running:false
+		})
+	},
+	onReset:function(){
+		this.setState({
+			elapsedTime:0
+		})
+	},
+	onTick:function(){
+		if(this.state.running){
+			var now = Date.now();
+			this.setState({
+				previousTime:now,
+				elapsedTime:this.state.elapsedTime + (now - this.state.previousTime)
+			})
+		}
+
+	},
+	componentDidMount:function(){
+		this.handle = setInterval(this.onTick,100)
+	},
+	componentWillUnmount:function(){
+		clearInterval(this.handle)
+	},
+	render:function(){
+		var seconds = Math.floor(this.state.elapsedTime / 1000)
+		return(
+			<div className="stopwatch">
+			<h2>Stopwatch</h2>
+			<div className="stopwatch-time">{seconds}</div>
+			{this.state.running ? <button onClick={this.onStop}>Stop</button> : <button onClick={this.onStart}>Start</button>}
+			<button onClick={this.onReset}>Reset</button>
 			</div>
 		)
 	}
