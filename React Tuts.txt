@@ -70,8 +70,48 @@ Two Main Types of state are there:-
 2.Component State
 
 Data flows from paretn to child as props(unidriectional flow)
-input elements in html are StateFuland we have to manage it explicitly in react
-state is our responsibility in react.
+
+application state should be in highest level component
+
+REDUX
+
+Two types of component 
+Presentational Component
+Container Component : how things works, get data from state and give them to presentational component to render them 
+
+Presentation Componets are of two types
+Logical
+React components
+Mange own state
+My or may not take part in lifecycle 
+
+
+Pure
+Pure functions
+Stateless
+Rely on props
+Don’t take part in life cycle events
+
+Container Component: Redux aware component that usually defines no markup of its own but instead relies on composing presentational components into a cohesive UI
+Logical Component: Presentational component that has its own state to manage and may or may not make use of React lifecycle events
+Pure Component: Presentation component that is implemented as a pure function. These components are passed props and return markup, no questions asked, no side-effects. That means they do not manage a state of their own and do not take part in React life cycle events.
+Component Hierarchy: A composition of React components represented as a tree that depicts the component structure.
+
+Actions are defined as string literals and change the state of the application
+Action Returns a new state via reducers
+Actions are event that change state
+Reducers are pure functions (Not mutate state)
+
+Reducer: A Redux construct that is responsible for maintaining a specific portion of the Redux store. 
+In JavaScript, a reducer is implemented as a pure function that takes two arguments, 
+the current state and the action being taken, and produces the next state. 
+In order for Redux to work properly, Reducers must not mutate the current state. 
+In other words, the state for a reducer must be treated as immutable.
+
+Actions: Explicit events that occur in our application represented by a type and any relevant metadata associated with the action
+Action Creators: In Redux, a construct for generating an action.
+
+
 
 
 
